@@ -8,8 +8,8 @@ function firstChallenge() {
   const inputValue = inputField.value.trim(); // Get and trim the input value
   console.log(`Input value: ${inputValue}`); // Log the value to the console
 
-  if(inputValue === "\"Sparky\"") {
-    document.querySelector('#codeExample img').src = "/assets/programming_game/resolvedCode.png";
+  if(inputValue === "\"Sparky\";") {
+    document.querySelector('#codeExample img').src = "/assets/programming_game/after_answer.png";
     document.getElementById('playerName').innerHTML = "Sparky";
     document.getElementById('variableHint').innerHTML = "Great job! What you just did is <b>assign a value to a variable</b>. In this case, the variable is called playerName and the value is \"Sparky\". You can use this variable in your code to refer to the player's name.";
   }
