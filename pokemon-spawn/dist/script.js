@@ -27,10 +27,9 @@ const game = new Phaser.Game(config);
 let cursors;
 let player;
 let showDebug = false;
-let helpTextHidden = false;
-let stepCount = 0;
-let lastPlayerTile = { x: null, y: null };
-let alertTextShown = false;
+let interactText;
+let canInteract = false;
+let objectToInteract;
 
 function preload() {
   this.load.image("tiles", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilesets/tuxmon-sample-32px-extruded.png");
@@ -113,7 +112,7 @@ function create() {
 
   // Help text that has a "fixed" position on the screen
   const helpText = this.add.
-  text(16, 16, 'Arrow keys to move\nPress "Enter" to hide', {
+  text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
     font: "18px monospace",
     fill: "#000000",
     padding: { x: 20, y: 10 },
@@ -128,10 +127,7 @@ function create() {
       targets: helpText,
       alpha: 0,
       duration: 500,
-      onComplete: () => {
-        helpText.setVisible(false);
-        helpTextHidden = true; // Set flag when help text is hidden
-      }
+      onComplete: () => helpText.setVisible(false)
     });
   });
 
@@ -150,6 +146,50 @@ function create() {
       collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
       faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
     });
+  });
+
+  // Add an interactive object
+  objectToInteract = this.add.rectangle(320, 320, 32, 32, 0x00ff00);
+  this.physics.add.existing(objectToInteract, true); // Make it a static physics object
+
+  // Add overlap detection
+  this.physics.add.overlap(player, objectToInteract, () => {
+    if (!canInteract) {
+      // Show "Press Space to interact" text
+      interactText = this.add.text(16, 16, 'Press SPACE to interact', {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff"
+      })
+      .setScrollFactor(0)
+      .setDepth(30);
+      canInteract = true;
+    }
+  }, null, this);
+
+  // Add spacebar interaction
+  this.input.keyboard.on('keydown-SPACE', () => {
+    if (canInteract) {
+      // Show interaction message
+      const message = this.add.text(16, 60, 'You found a special object!', {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff"
+      })
+      .setScrollFactor(0)
+      .setDepth(30);
+
+      // Fade out after 2 seconds
+      this.tweens.add({
+        targets: message,
+        alpha: 0,
+        duration: 1000,
+        delay: 2000,
+        onComplete: () => message.destroy()
+      });
+    }
   });
 }
 
@@ -196,41 +236,11 @@ function update(time, delta) {
     if (prevVelocity.y > 0) player.setTexture("atlas", "misa-front");
   }
 
-  if (helpTextHidden && !alertTextShown) {
-    // Get player's current tile position
-    const tileX = Math.floor(player.x / 32);
-    const tileY = Math.floor(player.y / 32);
-
-    // Only count a step if the player moved to a new tile
-    if (lastPlayerTile.x !== tileX || lastPlayerTile.y !== tileY) {
-      stepCount++;
-      lastPlayerTile.x = tileX;
-      lastPlayerTile.y = tileY;
+  // Check if player is not overlapping anymore
+  if (!this.physics.overlap(player, objectToInteract) && canInteract) {
+    if (interactText) {
+      interactText.destroy();
     }
-
-    if (stepCount >= 5) {
-      // Show alert text
-      const alertText = player.scene.add.text(
-        player.x - 40, player.y - 40,
-        "You moved 5 steps!",
-        {
-          font: "16px monospace",
-          fill: "#ffffff",
-          backgroundColor: "#000000",
-          padding: { x: 10, y: 5 }
-        }
-      ).setScrollFactor(0).setDepth(40);
-
-      // Optionally fade out after 2 seconds
-      player.scene.tweens.add({
-        targets: alertText,
-        alpha: 0,
-        duration: 1000,
-        delay: 2000,
-        onComplete: () => alertText.setVisible(false)
-      });
-
-      alertTextShown = true;
-    }
+    canInteract = false;
   }
 }
