@@ -13,15 +13,36 @@
     <button class="return-button" onclick="window.location.href='../../index.html'">Return to Main</button>
   </header>
   
-  <div class="game-window">
-    <div class="instructions-box">
-      <h3>Instructions:</h3>
-      <div id="instruction-text" class="instruction-text">
-        Welcome to the game! Press Continue to learn more.
+  <div class="game-layout">
+    <div class="timeline">
+      <div class="module">
+        <div class="pokeball active" title="Variables"></div>
+        <div class="module-name">Variables</div>
       </div>
-      <button id="continue-btn" class="continue-button">Continue</button>
+      <div class="module">
+        <div class="pokeball locked" title="Locked: Complete Variables first"></div>
+        <div class="module-name">Conditionals</div>
+      </div>
+      <div class="module">
+        <div class="pokeball locked" title="Locked: Complete Conditionals first"></div>
+        <div class="module-name">Loops</div>
+      </div>
+      <div class="module">
+        <div class="pokeball locked" title="Locked: Complete Loops first"></div>
+        <div class="module-name">Functions</div>
+      </div>
     </div>
-    <div id="game-container"></div>
+
+    <div class="game-window">
+      <div class="instructions-box">
+        <h3>Instructions:</h3>
+        <div id="instruction-text" class="instruction-text">
+          Welcome to the game! Press Continue to learn more.
+        </div>
+        <button id="continue-btn" class="continue-button">Continue</button>
+      </div>
+      <div id="game-container"></div>
+    </div>
   </div>
 
   <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
@@ -32,7 +53,6 @@
       "Today we are learning about variables, which are like boxes that hold information.You can create variables with different functions. In this case we are going to use a \"String\".",
       "A string is a sequence of characters, like a word or a sentence. You can create a string variable by using the keyword 'String' followed by the variable name and the value in quotes.",
       "For example, you can create a variable called 'name' and assign it the value 'Sparky', You can also create a variable called 'age' and assign it the value '10'.",
-      
       "Use arrow keys to move your character around the map.",
       "Press SPACE when near objects to interact with them.",
       "Find the battle zone to start learning about programming!",
