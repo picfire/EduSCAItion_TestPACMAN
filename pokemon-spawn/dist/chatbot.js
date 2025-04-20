@@ -1,7 +1,7 @@
 import { HF_API_TOKEN, SYSTEM_PROMPT } from './config.js';
 
 async function getChatbotResponse(message) {
-    const API_URL = "https://api-inference.huggingface.co/models/facebook/opt-350m";
+    const API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
     
     try {
         const response = await fetch(API_URL, {
@@ -39,6 +39,29 @@ async function getChatbotResponse(message) {
     } catch (error) {
         console.error('Network Error:', error);
         return getFallbackResponse(message);
+    }
+}
+
+async function handleSendMessage() {
+    const message = chatInput.value;
+
+    if (message && message.trim().length > 0) {
+        addMessage(message, true);
+        chatInput.value = '';
+
+        const typingDiv = document.createElement('div');
+        typingDiv.classList.add('message', 'bot-message', 'typing');
+        typingDiv.textContent = "Professor Oak's Assistant is thinking...";
+        chatMessages.appendChild(typingDiv);
+
+        try {
+            const response = await getChatbotResponse(message);
+            typingDiv.remove();
+            addMessage(response, false);
+        } catch (error) {
+            typingDiv.remove();
+            addMessage("I'm having connection issues, but let me help anyway!", false);
+        }
     }
 }
 
