@@ -27,6 +27,10 @@ const game = new Phaser.Game(config);
 let cursors;
 let player;
 let showDebug = false;
+let helpTextHidden = false;
+let stepCount = 0;
+let lastPlayerTile = { x: null, y: null };
+let alertTextShown = false;
 
 function preload() {
   this.load.image("tiles", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilesets/tuxmon-sample-32px-extruded.png");
@@ -108,7 +112,7 @@ function create() {
   cursors = this.input.keyboard.createCursorKeys();
 
   // Help text that has a "fixed" position on the screen
-  this.add.
+  const helpText = this.add.
   text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
     font: "18px monospace",
     fill: "#000000",
@@ -117,6 +121,19 @@ function create() {
 
   setScrollFactor(0).
   setDepth(30);
+
+  // Hide help text with fade when Enter is pressed
+  this.input.keyboard.on("keydown-ENTER", () => {
+    this.tweens.add({
+      targets: helpText,
+      alpha: 0,
+      duration: 500,
+      onComplete: () => {
+        helpText.setVisible(false);
+        helpTextHidden = true; // Set flag when help text is hidden
+      }
+    });
+  });
 
   // Debug graphics
   this.input.keyboard.once("keydown-D", event => {
@@ -177,5 +194,43 @@ function update(time, delta) {
     if (prevVelocity.x > 0) player.setTexture("atlas", "misa-right");else
     if (prevVelocity.y < 0) player.setTexture("atlas", "misa-back");else
     if (prevVelocity.y > 0) player.setTexture("atlas", "misa-front");
+  }
+
+  if (helpTextHidden && !alertTextShown) {
+    // Get player's current tile position
+    const tileX = Math.floor(player.x / 32);
+    const tileY = Math.floor(player.y / 32);
+
+    // Only count a step if the player moved to a new tile
+    if (lastPlayerTile.x !== tileX || lastPlayerTile.y !== tileY) {
+      stepCount++;
+      lastPlayerTile.x = tileX;
+      lastPlayerTile.y = tileY;
+    }
+
+    if (stepCount >= 5) {
+      // Show alert text
+      const alertText = player.scene.add.text(
+        player.x - 40, player.y - 40,
+        "You moved 5 steps!",
+        {
+          font: "16px monospace",
+          fill: "#ffffff",
+          backgroundColor: "#000000",
+          padding: { x: 10, y: 5 }
+        }
+      ).setScrollFactor(0).setDepth(40);
+
+      // Optionally fade out after 2 seconds
+      player.scene.tweens.add({
+        targets: alertText,
+        alpha: 0,
+        duration: 1000,
+        delay: 2000,
+        onComplete: () => alertText.setVisible(false)
+      });
+
+      alertTextShown = true;
+    }
   }
 }
