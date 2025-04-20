@@ -131,6 +131,17 @@
         }
     });
 
+    chatInput.addEventListener('keydown', function(event) {
+      if (event.key === ' ') {
+        // Insert a space at the current cursor position
+        const start = this.selectionStart;
+        const end = this.selectionEnd;
+        this.value = this.value.substring(0, start) + ' ' + this.value.substring(end);
+        this.selectionStart = this.selectionEnd = start + 1;
+        event.preventDefault(); // Prevent the default action
+      }
+    });
+
     // Initialize chat with welcome message
     addMessage("Hello trainer! I'm Professor Oak's AI assistant. Ask me about programming concepts!", false);
   </script>
