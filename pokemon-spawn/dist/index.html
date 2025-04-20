@@ -43,11 +43,24 @@
       </div>
       <div id="game-container"></div>
     </div>
+
+    <div class="chatbot-container">
+      <div class="chat-header">
+        Professor Oak's Assistant
+      </div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input-container">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Ask me about programming...">
+        <button class="chat-send" id="chat-send">Send</button>
+      </div>
+    </div>
   </div>
 
   <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
   <script src="./script.js"></script>
-  <script>
+  <script type="module">
+    import { getChatbotResponse } from './chatbot.js';
+    
     const instructions = [
       "Welcome to the game! Press Continue to learn more.",
       "Today we are learning about variables, which are like boxes that hold information.You can create variables with different functions. In this case we are going to use a \"String\".",
@@ -72,6 +85,50 @@
         instructionText.textContent = instructions[currentInstruction];
       }
     });
+
+    // Chat elements
+    const chatInput = document.getElementById('chat-input');
+    const chatSend = document.getElementById('chat-send');
+    const chatMessages = document.getElementById('chat-messages');
+
+    function addMessage(message, isUser) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
+        messageDiv.textContent = message;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function handleSendMessage() {
+        const message = chatInput.value.trim();
+        if (message) {
+            addMessage(message, true);
+            chatInput.value = '';
+
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('message', 'bot-message', 'typing');
+            typingDiv.textContent = "Professor Oak's Assistant is thinking...";
+            chatMessages.appendChild(typingDiv);
+
+            try {
+                const response = await getChatbotResponse(message);
+                typingDiv.remove();
+                addMessage(response, false);
+            } catch (error) {
+                typingDiv.remove();
+                addMessage("I'm having connection issues, but let me help anyway!", false);
+            }
+        }
+    }
+
+    chatSend.addEventListener('click', handleSendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleSendMessage();
+        }
+    });
+
+    addMessage("Hello trainer! I'm Professor Oak's AI assistant. Ask me about programming concepts!", false);
   </script>
 </body>
 </html>
