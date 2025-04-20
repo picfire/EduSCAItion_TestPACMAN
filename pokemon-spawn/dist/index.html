@@ -16,12 +16,38 @@
   <div class="game-window">
     <div class="instructions-box">
       <h3>Instructions:</h3>
-      <p>Use arrow keys to move around. Press SPACE to interact with objects and start battles.</p>
+      <div id="instruction-text" class="instruction-text">
+        Welcome to the game! Press Continue to learn more.
+      </div>
+      <button id="continue-btn" class="continue-button">Continue</button>
     </div>
     <div id="game-container"></div>
   </div>
 
   <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
   <script src="./script.js"></script>
+  <script>
+    const instructions = [
+      "Welcome to the game! Press Continue to learn more.",
+      "Use arrow keys to move your character around the map.",
+      "Press SPACE when near objects to interact with them.",
+      "Find the battle zone to start learning about programming!",
+      "Good luck on your adventure!"
+    ];
+
+    let currentInstruction = 0;
+    const instructionText = document.getElementById('instruction-text');
+    const continueBtn = document.getElementById('continue-btn');
+
+    continueBtn.addEventListener('click', () => {
+      currentInstruction++;
+      if (currentInstruction < instructions.length) {
+        instructionText.textContent = instructions[currentInstruction];
+      } else {
+        currentInstruction = 0;
+        instructionText.textContent = instructions[currentInstruction];
+      }
+    });
+  </script>
 </body>
 </html>
