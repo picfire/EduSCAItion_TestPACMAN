@@ -12,6 +12,18 @@ header {
   padding: 0.5em 0;
 }
 
+/* Center the logo inside the container */
+.container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.logo {
+  max-width: 100%; /* Ensure the logo scales properly */
+  height: auto; /* Maintain aspect ratio */
+}
+
 .container {
   width: 90%;
   max-width: 1100px;
@@ -92,6 +104,18 @@ nav a {
 }
 
 /* From Uiverse.io by Codewithvinay */ 
+.card_title{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card_title p {
+  font-size: 2.0em;
+  color: #000;
+  margin: 0;
+}
+
 .card {
   width: 500px;
   height: 254px;
@@ -192,9 +216,9 @@ nav a {
 }
 
 footer {
-  padding: 10em 0;
-  margin-top: 2em;
-  font-size: 0.95em;
+  padding: 5em 0;
+  margin-top: 6em;
+  font-size: 2em;
   text-align: center;
 
   background: #901340;
