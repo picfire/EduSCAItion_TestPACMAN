@@ -1,0 +1,114 @@
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  margin: 0;
+  background: #f7f7f7;
+  color: #333;
+}
+
+header {
+  background: #ffae1a;
+  padding: 0.5em 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.logo {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  display: inline-block;
+  margin: 0;
+}
+
+nav {
+  float: right;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 2em;
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.hero {
+  background: #4c97ff;
+  color: #fff;
+  padding: 3em 0 2em 0;
+  text-align: center;
+}
+
+.hero h2 {
+  font-size: 2.5em;
+  margin-bottom: 0.5em;
+}
+
+.hero p {
+  font-size: 1.2em;
+  margin-bottom: 1.5em;
+}
+
+#start-btn {
+  background: #ffae1a;
+  color: #fff;
+  border: none;
+  padding: 0.8em 2em;
+  font-size: 1.1em;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#start-btn:hover {
+  background: #ff8800;
+}
+
+.projects {
+  padding: 2em 0;
+}
+
+.projects h3 {
+  text-align: center;
+  margin-bottom: 1.5em;
+}
+
+.project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  justify-content: center;
+}
+
+.project-card {
+  background: #fff;
+  border-radius: 1em;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  width: 220px;
+  padding: 1em;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+.project-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+}
+
+.project-card img {
+  width: 100%;
+  border-radius: 0.5em;
+  margin-bottom: 0.7em;
+}
+
+footer {
+  background: #ececec;
+  color: #888;
+  text-align: center;
+  padding: 1em 0;
+  margin-top: 2em;
+  font-size: 0.95em;
+}

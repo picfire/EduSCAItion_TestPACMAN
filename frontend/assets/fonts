@@ -1,0 +1,15 @@
+my-web-project
+├── src
+│   ├── css
+│   │   ├── styles.css
+│   │   └── normalize.css
+│   ├── js
+│   │   ├── main.js
+│   │   └── utils.js
+│   └── pages
+│       ├── index.html
+│       └── about.html
+├── assets
+│   └── fonts
+├── package.json
+└── README.md
