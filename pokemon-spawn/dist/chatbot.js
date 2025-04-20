@@ -1,44 +1,33 @@
 import { HF_API_TOKEN, SYSTEM_PROMPT } from './config.js';
 
 async function getChatbotResponse(message) {
-    const API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill";
-    
+    const API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large";
+
     try {
+        console.log('API Request URL:', API_URL);
+        console.log('API Request Body:', JSON.stringify({ inputs: `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:` }));
+
         const response = await fetch(API_URL, {
             method: "POST",
             headers: {
                 "Authorization": `Bearer ${HF_API_TOKEN}`,
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                "inputs": `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:`,
-                "parameters": {
-                    "max_length": 150,
-                    "temperature": 0.7,
-                    "return_full_text": false
-                }
-            })
+            body: JSON.stringify({ inputs: `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:` })
         });
 
         const data = await response.json();
-        console.log('API Response:', data); // For debugging
+        console.log('API Response:', data);
 
-        // Check for errors in the response
-        if (data.error) {
-            console.error('API Error:', data.error);
-            return getFallbackResponse(message);
+        if (data && data[0] && data[0].generated_text) {
+            return data[0].generated_text;
+        } else {
+            console.log('Fallback triggered');
+            return "Sorry, I'm having trouble connecting to the AI right now.";
         }
-
-        // Check for valid response
-        if (Array.isArray(data) && data[0]?.generated_text) {
-            const aiResponse = data[0].generated_text.trim();
-            return aiResponse.length > 0 ? aiResponse : getFallbackResponse(message);
-        }
-
-        return getFallbackResponse(message);
     } catch (error) {
         console.error('Network Error:', error);
-        return getFallbackResponse(message);
+        return "Sorry, I'm having connection issues, but let me help anyway!";
     }
 }
 
