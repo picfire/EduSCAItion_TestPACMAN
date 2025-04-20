@@ -1,7 +1,7 @@
 import { HF_API_TOKEN, SYSTEM_PROMPT } from './config.js';
 
 async function getChatbotResponse(message) {
-    const API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large";
+    const API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf";
     
     try {
         const response = await fetch(API_URL, {
@@ -11,12 +11,23 @@ async function getChatbotResponse(message) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "inputs": `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant: Let me explain using Pokemon examples!`
+                "inputs": `<s>[INST] ${SYSTEM_PROMPT}\n\nQuestion: ${message} [/INST]</s>`
             }),
         });
 
         const data = await response.json();
-        return data[0].generated_text || getFallbackResponse(message);
+        
+        // Check if we got a valid response
+        if (data && data[0]?.generated_text) {
+            // Clean up the response by removing the instruction tags if present
+            let cleanResponse = data[0].generated_text
+                .replace(/<s>\[INST\].*?\[\/INST\]<\/s>/g, '')
+                .trim();
+            
+            return cleanResponse || getFallbackResponse(message);
+        }
+        
+        return getFallbackResponse(message);
     } catch (error) {
         console.error('Error:', error);
         return getFallbackResponse(message);
@@ -25,15 +36,38 @@ async function getChatbotResponse(message) {
 
 function getFallbackResponse(message) {
     const lowerMessage = message.toLowerCase();
-    
-    if (lowerMessage.includes('variable')) {
-        return "Variables are like Pokéballs! Just as Pokéballs store different Pokemon, variables store different types of data.\n\nFor example:\nString pokemonName = \"Pikachu\";\nint level = 25;\nboolean isElectricType = true;\n\nEach variable holds its own piece of data, just like each Pokéball holds its own Pokemon!";
-    }
-    if (lowerMessage.includes('string')) {
-        return "Strings are like Pokémon names - text wrapped in quotes! Example:\nString trainerName = \"Ash\";";
-    }
-    if (lowerMessage.includes('number')) {
-        return "Numbers are like Pokémon stats - they can be stored in variables!\nint hp = 100;\ndouble speed = 90.5;";
+    const responses = {
+        variable: {
+            explanation: "Variables are like Pokéballs - they store different types of data!",
+            examples: [
+                "String pokemonName = \"Pikachu\";  // Stores text",
+                "int level = 25;                    // Stores whole numbers",
+                "boolean isElectricType = true;     // Stores true/false",
+                "double speed = 90.5;               // Stores decimal numbers"
+            ]
+        },
+        string: {
+            explanation: "Strings are like Pokémon names - they store text data!",
+            examples: [
+                "String trainerName = \"Ash\";",
+                "String gymBadge = \"Thunder Badge\";",
+                "String pokemonType = \"Electric\";"
+            ]
+        },
+        number: {
+            explanation: "Numbers are like Pokémon stats - they track values!",
+            examples: [
+                "int hp = 100;          // Health points",
+                "double attack = 55.5;   // Attack power",
+                "int defense = 40;       // Defense points"
+            ]
+        }
+    };
+
+    for (const [key, content] of Object.entries(responses)) {
+        if (lowerMessage.includes(key)) {
+            return `${content.explanation}\n\nExamples:\n${content.examples.join('\n')}`;
+        }
     }
     return "Try asking about variables, strings, or numbers in programming!";
 }
