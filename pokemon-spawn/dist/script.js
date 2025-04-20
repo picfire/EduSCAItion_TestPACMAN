@@ -116,7 +116,7 @@ function create() {
 
   // Help text that has a "fixed" position on the screen
   const helpText = this.add.
-  text(16, 16, 'Arrow keys to move\nPress "Enter" to hide', {
+  text(16, 16, 'Arrow keys to move, go ahead and enter the battle gym to learn about variables!\nPress "Enter" to hide', {
     font: "18px monospace",
     fill: "#000000",
     padding: { x: 20, y: 10 },
