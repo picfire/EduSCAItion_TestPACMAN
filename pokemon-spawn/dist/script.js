@@ -37,7 +37,7 @@ let helpTextHidden = false;
 
 function preload() {
   this.load.image("tiles", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilesets/tuxmon-sample-32px-extruded.png");
-  this.load.tilemapTiledJSON("map", "https://raw.githubusercontent.com/jesus-aguilar-pro/EduSCAItion/refs/heads/main/assets/map/tilemaps/tuxemon-town.json?token=GHSAT0AAAAAAC5WCSXREQ4TTZVXBZOUH7N62AFHAUQ");
+  this.load.tilemapTiledJSON("map", "https://raw.githubusercontent.com/jesus-aguilar-pro/EduSCAItion/refs/heads/main/assets/map/tilemaps/tuxemon-town.json");
 
   // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
   // the player animations (walking left, walking right, etc.) in one image. For more info see:
