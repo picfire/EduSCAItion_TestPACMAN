@@ -1,7 +1,7 @@
 import { HF_API_TOKEN, SYSTEM_PROMPT } from './config.js';
 
 async function getChatbotResponse(message) {
-    const API_URL = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf";
+    const API_URL = "https://api-inference.huggingface.co/models/facebook/opt-350m";
     
     try {
         const response = await fetch(API_URL, {
@@ -11,25 +11,26 @@ async function getChatbotResponse(message) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "inputs": `<s>[INST] ${SYSTEM_PROMPT}\n\nQuestion: ${message} [/INST]</s>`
-            }),
+                "inputs": message,
+                "parameters": {
+                    "max_length": 100,
+                    "temperature": 0.7,
+                    "return_full_text": false
+                }
+            })
         });
 
         const data = await response.json();
-        
-        // Check if we got a valid response
-        if (data && data[0]?.generated_text) {
-            // Clean up the response by removing the instruction tags if present
-            let cleanResponse = data[0].generated_text
-                .replace(/<s>\[INST\].*?\[\/INST\]<\/s>/g, '')
-                .trim();
-            
-            return cleanResponse || getFallbackResponse(message);
+        console.log('API Response:', data); // Debug line
+
+        if (Array.isArray(data) && data[0]?.generated_text) {
+            return data[0].generated_text;
+        } else {
+            console.log('Falling back to default responses');
+            return getFallbackResponse(message);
         }
-        
-        return getFallbackResponse(message);
     } catch (error) {
-        console.error('Error:', error);
+        console.error('API Error:', error);
         return getFallbackResponse(message);
     }
 }
