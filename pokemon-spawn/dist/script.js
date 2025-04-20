@@ -113,7 +113,7 @@ function create() {
 
   // Help text that has a "fixed" position on the screen
   const helpText = this.add.
-  text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
+  text(16, 16, 'Arrow keys to move\nPress "Enter" to hide', {
     font: "18px monospace",
     fill: "#000000",
     padding: { x: 20, y: 10 },
