@@ -30,10 +30,14 @@ let showDebug = false;
 let interactText;
 let canInteract = false;
 let objectToInteract;
+let battleVariables;
+let canBattle = false;
+let battleText;
+let helpTextHidden = false;
 
 function preload() {
   this.load.image("tiles", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilesets/tuxmon-sample-32px-extruded.png");
-  this.load.tilemapTiledJSON("map", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilemaps/tuxemon-town.json");
+  this.load.tilemapTiledJSON("map", "https://raw.githubusercontent.com/jesus-aguilar-pro/EduSCAItion/refs/heads/main/assets/map/tilemaps/tuxemon-town.json?token=GHSAT0AAAAAAC5WCSXRDHUAUBAYX7RLQJA62AEST7A");
 
   // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
   // the player animations (walking left, walking right, etc.) in one image. For more info see:
@@ -112,7 +116,7 @@ function create() {
 
   // Help text that has a "fixed" position on the screen
   const helpText = this.add.
-  text(16, 16, 'Arrow keys to move\nPress "D" to show hitboxes', {
+  text(16, 16, 'Arrow keys to move\nPress "Enter" to hide', {
     font: "18px monospace",
     fill: "#000000",
     padding: { x: 20, y: 10 },
@@ -127,7 +131,10 @@ function create() {
       targets: helpText,
       alpha: 0,
       duration: 500,
-      onComplete: () => helpText.setVisible(false)
+      onComplete: () => {
+        helpText.setVisible(false);
+        helpTextHidden = true; // Set flag when help text is hidden
+      }
     });
   });
 
@@ -148,14 +155,36 @@ function create() {
     });
   });
 
+  // Add first battle (Teaches Variables)
+  // Located in the first building on the left
+
+  battleVariables = this.add.rectangle(276, 1095, 60, 60, 0x0000ff);
+  battleVariables.setAlpha(0); // Make it invisible
+  this.physics.add.existing(battleVariables, true); // Add physics
+
+  // Add overlap detection for battle
+  this.physics.add.overlap(player, battleVariables, () => {
+    if (!canBattle && helpTextHidden) { // Only show if help text is hidden
+      battleText = this.add.text(16, 16, 'Press SPACE to start battle', {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff"
+      })
+      .setScrollFactor(0)
+      .setDepth(30);
+      canBattle = true;
+    }
+  }, null, this);
+
   // Add an interactive object
-  objectToInteract = this.add.rectangle(320, 320, 32, 32, 0x00ff00);
+  objectToInteract = this.add.rectangle(460, 1040, 40, 40, 0x00ff00);
+  objectToInteract.setAlpha(0);
   this.physics.add.existing(objectToInteract, true); // Make it a static physics object
 
   // Add overlap detection
   this.physics.add.overlap(player, objectToInteract, () => {
-    if (!canInteract) {
-      // Show "Press Space to interact" text
+    if (!canInteract && helpTextHidden) { // Only show if help text is hidden
       interactText = this.add.text(16, 16, 'Press SPACE to interact', {
         font: "18px monospace",
         fill: "#000000",
@@ -188,6 +217,27 @@ function create() {
         duration: 1000,
         delay: 2000,
         onComplete: () => message.destroy()
+      });
+    }
+
+    if (canBattle) {
+      // Show battle message
+      const battleMessage = this.add.text(16, 60, 'Battle Started!', {
+        font: "18px monospace",
+        fill: "#000000",
+        padding: { x: 20, y: 10 },
+        backgroundColor: "#ffffff"
+      })
+      .setScrollFactor(0)
+      .setDepth(30);
+
+      // Fade out after 2 seconds
+      this.tweens.add({
+        targets: battleMessage,
+        alpha: 0,
+        duration: 1000,
+        delay: 2000,
+        onComplete: () => battleMessage.destroy()
       });
     }
   });
@@ -242,5 +292,13 @@ function update(time, delta) {
       interactText.destroy();
     }
     canInteract = false;
+  }
+
+  // Check if player is not overlapping with battleVariables anymore
+  if (!this.physics.overlap(player, battleVariables) && canBattle) {
+    if (battleText) {
+      battleText.destroy();
+    }
+    canBattle = false;
   }
 }
