@@ -1,7 +1,7 @@
-import { HF_API_TOKEN } from './config.js';
+import { HF_API_TOKEN, SYSTEM_PROMPT } from './config.js';
 
 async function getChatbotResponse(message) {
-    const API_URL = "https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium";
+    const API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-large";
     
     try {
         const response = await fetch(API_URL, {
@@ -11,7 +11,7 @@ async function getChatbotResponse(message) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "inputs": `You are Professor Oak's programming assistant. Explain this programming concept using Pokemon analogies: ${message}`
+                "inputs": `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant: Let me explain using Pokemon examples!`
             }),
         });
 
@@ -27,7 +27,7 @@ function getFallbackResponse(message) {
     const lowerMessage = message.toLowerCase();
     
     if (lowerMessage.includes('variable')) {
-        return "Variables are like Pokéballs - they store different types of data! For example:\nString pokemonName = \"Pikachu\";\nint level = 25;";
+        return "Variables are like Pokéballs! Just as Pokéballs store different Pokemon, variables store different types of data.\n\nFor example:\nString pokemonName = \"Pikachu\";\nint level = 25;\nboolean isElectricType = true;\n\nEach variable holds its own piece of data, just like each Pokéball holds its own Pokemon!";
     }
     if (lowerMessage.includes('string')) {
         return "Strings are like Pokémon names - text wrapped in quotes! Example:\nString trainerName = \"Ash\";";
