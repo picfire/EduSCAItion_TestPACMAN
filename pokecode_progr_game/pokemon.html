@@ -5,73 +5,64 @@
   <link rel = "stylesheet" type = "text/css" href = "pokemon.css" />
 </head>
 
-  <div class="game">
-    <div class="opponent">
-      <!-- <div class="hint-container"> -->
-        <!-- <div class="hint active">
-          Write a string to set the name of "Sparky"
+<div class="layout">
+  <section class="game-window">
+    <div class="game">
+      <div class="opponent">
+        <div class="stats">
+          <div class="top">
+            <div id = "apHP" class="hp-count">100</div>
+          </div>
+          <span class="name">
+            Charizard
+          </span>
+          <span class="level">
+            86
+          </span>
         </div>
-        <div class="hint">
-          Write a string to set the name of "Pikachu"
-        </div>
-        <div class="hint">
-          Write a string to set the name of "Bulbasaur"
-        </div>
-      </div> -->
-      <div class="stats">
-        <div class="top">
-          <!-- <div class="pokeballs">
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-          </div> -->
-          <div id = "apHP" class="hp-count">100</div>
-        </div>
-        <span class="name">
-          Charizard
-        </span>
-        <span class="level">
-          86
-        </span>
+        <img class="pokemon" src="http://img.pokemondb.net/sprites/black-white/anim/normal/charizard.gif" alt ="A sprite of charizard" />
       </div>
-      <img class="pokemon" src="http://img.pokemondb.net/sprites/black-white/anim/normal/charizard.gif" alt ="A sprite of charizard" />
-    </div>
-    <div class="player">
-      <div class="stats">
-        <div class="top">
-          <!-- <div class="pokeballs">
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-            <div class="pokeball"></div>
-          </div> -->
-          <div id = "myHP" class="hp-count">100</div>
+      <div class="player">
+        <div class="stats">
+          <div class="top">
+            <div id = "myHP" class="hp-count">100</div>
+          </div>
+          <span class="name">
+            The Sun Devil
+          </span>
+          <span class="level">
+            86
+          </span>
         </div>
-        <span class="name">
-          The Sun Devil
-        </span>
-        <span class="level">
-          86
-        </span>
+        <img class="pokemon" src="/assets/programming_game/Gen-4-Turbo-The-character-shou-unscreen.gif" alt="A gif from our mascot, Sparky!" />
       </div>
-      <img class="pokemon" src="/assets/programming_game/Gen-4-Turbo-The-character-shou-unscreen.gif" alt="A gif from our mascot, Sparky!" />
     </div>
+    <div class="box">
+      <div id = "message" class="message">
+        What should Blastoise do?
+      </div>
+      <div class="actions">
+        <input onClick =  >
+        <!-- <button onclick = "waterCannon()">Water Cannon</button>
+        <button onclick = "waterPulse()">Water Pulse</button>
+        <button onclick = "surf()">Surf</button>
+        <button onclick = "tackle()">Tackle</button> -->
+      </div>
+      <div class = "continue">
+        <button onclick = "compPokemon()">Continue</button>
+      </div>
+    </div>
+  </section>
+  <div class="hint-container"> 
+    <div class="hint-active">
+      Now that the Sun Devil has entered the battle, we need to set his name up.
+      Write a string to set the name of "The Sun Devil"
+    </div>
+    <!-- <div class="hint">
+      Write a string to set the name of "Pikachu"
+    </div>
+    <div class="hint">
+      Write a string to set the name of "Bulbasaur"
+    </div> -->
   </div>
-  <div class="box">
-    <div id = "message" class="message">
-      What should Blastoise do?
-    </div>
-    <div class="actions">
-      <input onClick =  >
-      <!-- <button onclick = "waterCannon()">Water Cannon</button>
-      <button onclick = "waterPulse()">Water Pulse</button>
-      <button onclick = "surf()">Surf</button>
-      <button onclick = "tackle()">Tackle</button> -->
-    </div>
-    <div class = "continue">
-      <button onclick = "compPokemon()">Continue</button>
-    </div>
-  </div>
+</div>

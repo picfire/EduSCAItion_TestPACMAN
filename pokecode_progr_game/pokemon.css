@@ -1,16 +1,18 @@
 body {
     font-family: monospace;
     font-size: 20px; 
+    background-color: #111;
+  }
+  
+ .layout {
+    display: flex;
   }
 
-  /* .full-box {
-    position: relative;
-    height: 80px;
-    width: 800px;
-    transform: scale(1.5);
+
+  .game-window {
     transform-origin: top left;
-  } */
-  
+    scale: 1.515;
+  }
   .game {
     position: relative;
     background-image: url('http://bit.ly/pokemonbg');
@@ -164,6 +166,24 @@ body {
     border-color: #666;
   }
   
+  .hint-container {
+    position: relative;
+    top: 0;
+    left: 420px;
+    width: 35.5%;
+    max-width: calc(100vw - 420px); /* Prevent overflow by limiting width */
+    overflow: hidden; /* Hide content that overflows */
+    box-sizing: border-box; /* Include padding and borders in width calculations */
+  }
+
+  .hint-active {
+    background: #ffffff;
+    border: 2px solid black;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    padding: 12px;
+  }
+
   .hint {
     background: #ffffff;
     border: 2px solid black;
