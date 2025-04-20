@@ -1,7 +1,15 @@
 body {
     font-family: monospace;
-    font-size: 20px;
+    font-size: 20px; 
   }
+
+  /* .full-box {
+    position: relative;
+    height: 80px;
+    width: 800px;
+    transform: scale(1.5);
+    transform-origin: top left;
+  } */
   
   .game {
     position: relative;
