@@ -1,16 +1,57 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>pokemon-spawn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
-
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="game-container"></div>
-<!-- partial -->
-  <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script><script  src="./script.js"></script>
+  <header class="game-header">
+    <button class="return-button" onclick="window.location.href='../../index.html'">Return to Main</button>
+  </header>
+  
+  <div class="game-window">
+    <div class="instructions-box">
+      <h3>Instructions:</h3>
+      <div id="instruction-text" class="instruction-text">
+        Welcome to the game! Press Continue to learn more.
+      </div>
+      <button id="continue-btn" class="continue-button">Continue</button>
+    </div>
+    <div id="game-container"></div>
+  </div>
 
+  <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
+  <script src="./script.js"></script>
+  <script>
+    const instructions = [
+      "Welcome to the game! Press Continue to learn more.",
+      "Today we are learning about variables, which are like boxes that hold information.You can create variables with different functions. In this case we are going to use a \"String\".",
+      "A string is a sequence of characters, like a word or a sentence. You can create a string variable by using the keyword 'String' followed by the variable name and the value in quotes.",
+      "For example, you can create a variable called 'name' and assign it the value 'Sparky', You can also create a variable called 'age' and assign it the value '10'.",
+      
+      "Use arrow keys to move your character around the map.",
+      "Press SPACE when near objects to interact with them.",
+      "Find the battle zone to start learning about programming!",
+      "Good luck on your adventure!"
+    ];
+
+    let currentInstruction = 0;
+    const instructionText = document.getElementById('instruction-text');
+    const continueBtn = document.getElementById('continue-btn');
+
+    continueBtn.addEventListener('click', () => {
+      currentInstruction++;
+      if (currentInstruction < instructions.length) {
+        instructionText.textContent = instructions[currentInstruction];
+      } else {
+        currentInstruction = 0;
+        instructionText.textContent = instructions[currentInstruction];
+      }
+    });
+  </script>
 </body>
 </html>
