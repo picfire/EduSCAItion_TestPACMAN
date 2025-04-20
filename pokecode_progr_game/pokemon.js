@@ -2,6 +2,26 @@ var userHP = 100;
 var opHP = 100;
 opAttacks = [flameThrower, dragonClaw, ember, growl];
 playerMove = 0;
+
+function firstChallenge() {
+  const inputField = document.getElementById("nameInput");
+  const inputValue = inputField.value.trim(); // Get and trim the input value
+  console.log(`Input value: ${inputValue}`); // Log the value to the console
+
+  if(inputValue === "\"The Sun Devil\"") {
+    document.getElementById('playerName').innerHTML = "The Sun Devil";
+    document.getElementById('variableHint').innerHTML = "Great job! What you just did is <b>assign a value to a variable</b>. In this case, the variable is called playerName and the value is \"The Sun Devil\". You can use this variable in your code to refer to the player's name.";
+  }
+  else {
+    const errorMessage = document.getElementById('incorrectAnswer');
+    errorMessage.classList.toggle('visible');
+
+    errorMessage.addEventListener('animationend', () => {
+      errorMessage.classList.toggle('visible');
+    });
+  }
+}
+
 /* users moves */
 function waterCannon() {
   if(playerMove == 0 && userHP != 0) {
