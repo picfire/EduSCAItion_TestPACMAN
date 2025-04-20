@@ -72,56 +72,6 @@ nav a {
   margin-bottom: 1.5em;
 }
 
-.game {
-  position: relative;
-  background-image: url('http://bit.ly/pokemonbg');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  border: 3px solid black;
-  border-radius: 8px 8px 0 0;
-  height: 480px;
-  width: 800px;
-  padding: 2em 0 0 0; 
-}
-
-.opponent {
-  position: relative;
-  height: 300px;
-}
-
-.opponent .stats {
-  position: absolute;
-  top: 96px;
-  left: 40px;
-  width: 320px;
-}
-
-.opponent .pokemon {
-  position: absolute;
-  bottom: 0;
-  right: 140px;
-  width: 100px;
-}
-
-.player {
-  position: relative;
-  height: 192px;
-}
-
-.player .stats {
-  position: absolute;
-  top: 48px;
-  right: 40px;
-  width: 320px;
-}
-
-.player .pokemon {
-  position: absolute;
-  left: 100px;
-  bottom: 10px;
-  width: 160px;
-}
-
 .box {
   padding: 8px;
   background: #333;
@@ -240,50 +190,12 @@ nav a {
   background: #555;
   border-color: #666;
 }
-.stats {
-  background: #111;
-  border: 2px solid black;
-  border-radius: 8px;
-  color: white;
-  padding: 12px;
-}
-
-.stats .pokeballs {
-  position: relative;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.stats .pokeballs .pokeball {
-  position: relative;
-  float: left;
-  background-image: url('http://bit.ly/pokeballimg');
-  background-size: 100% 100%;
-  width: 25px;
-  height: 25px;
-}
-
-.stats .hp-count:before {
-  content: 'HP: '
-}
-
-.stats .hp-count {
-  float: right;
-}
-
-
-.stats .name {
-  font-weight: bold;
-}
-
-.stats .level:before {
-  content: "LVL"
-}
 
 footer {
   padding: 10em 0;
   margin-top: 2em;
   font-size: 0.95em;
+  text-align: center;
 
   background: #901340;
   background: linear-gradient(90deg, rgba(144, 19, 64, 1) 0%, rgb(241, 152, 78) 50%, rgba(255, 203, 37, 1) 100%);

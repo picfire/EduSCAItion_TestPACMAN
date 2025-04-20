@@ -192,6 +192,20 @@ body {
 
   }
 
+  #codeExample img {
+    top: 50em;
+    /* visibility: hidden; */
+  }
+
+  #codeExampleSolved  {
+    background: #ffffff;
+    border: 2px solid black;
+    border-radius: 8px;
+    color: rgb(0, 0, 0);
+    right: 400px;
+    visibility: hidden;
+  }
+
   @keyframes fadeInOut {
     0% {
         opacity: 0;
