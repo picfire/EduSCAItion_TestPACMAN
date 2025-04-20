@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>pokemon-spawn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css">
-
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div id="game-container"></div>
-<!-- partial -->
-  <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script><script  src="./script.js"></script>
+  <header class="game-header">
+    <button class="return-button">Return to Main</button>
+  </header>
+  
+  <div class="game-window">
+    <div class="instructions-box">
+      <h3>Instructions:</h3>
+      <p>Use arrow keys to move around. Press SPACE to interact with objects and start battles.</p>
+    </div>
+    <div id="game-container"></div>
+  </div>
 
+  <script src='https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js'></script>
+  <script src="./script.js"></script>
 </body>
 </html>

@@ -1,18 +1,75 @@
 html,
-body,
-#game-container {
+body {
   margin: 0;
   padding: 0;
+  font-family: "Pixelify Sans", sans-serif;
+  background: #ffffff;
+}
+
+.game-header {
+  background: #901340;
+  background: linear-gradient(90deg, rgba(144, 19, 64, 1) 0%, rgb(241, 152, 78) 50%, rgba(255, 203, 37, 1) 100%);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  padding: 2em 0;
+  margin-bottom: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 2em;
+}
+
+.game-window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 #game-container {
-  min-width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  border: 3px solid black;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-#game-container>canvas {
-  border-radius: 5px;
+#game-container > canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.instructions-box {
+  width: 100%;
+  padding: 16px;
+  background: #333;
+  border: 3px solid black;
+  border-radius: 8px;
+  color: #fff;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.return-button {
+  background: #666;
+  border: 3px solid #888;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Pixelify Sans", monospace;
+  font-size: 16px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.return-button:hover {
+  background: #777;
+  border-color: #999;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
