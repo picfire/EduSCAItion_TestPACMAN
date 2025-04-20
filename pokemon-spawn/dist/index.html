@@ -61,6 +61,7 @@
   <script type="module">
     import { getChatbotResponse } from './chatbot.js';
     
+    // Instructions setup
     const instructions = [
       "Welcome to the game! Press Continue to learn more.",
       "Today we are learning about variables, which are like boxes that hold information.You can create variables with different functions. In this case we are going to use a \"String\".",
@@ -75,18 +76,6 @@
     let currentInstruction = 0;
     const instructionText = document.getElementById('instruction-text');
     const continueBtn = document.getElementById('continue-btn');
-
-    continueBtn.addEventListener('click', () => {
-      currentInstruction++;
-      if (currentInstruction < instructions.length) {
-        instructionText.textContent = instructions[currentInstruction];
-      } else {
-        currentInstruction = 0;
-        instructionText.textContent = instructions[currentInstruction];
-      }
-    });
-
-    // Chat elements
     const chatInput = document.getElementById('chat-input');
     const chatSend = document.getElementById('chat-send');
     const chatMessages = document.getElementById('chat-messages');
@@ -100,8 +89,9 @@
     }
 
     async function handleSendMessage() {
-        const message = chatInput.value.trim();
-        if (message) {
+        const message = chatInput.value;
+        
+        if (message && message.trim().length > 0) {
             addMessage(message, true);
             chatInput.value = '';
 
@@ -115,19 +105,33 @@
                 typingDiv.remove();
                 addMessage(response, false);
             } catch (error) {
+                console.error('Chat Error:', error);
                 typingDiv.remove();
                 addMessage("I'm having connection issues, but let me help anyway!", false);
             }
         }
     }
 
+    // Event Listeners
+    continueBtn.addEventListener('click', () => {
+        currentInstruction++;
+        if (currentInstruction < instructions.length) {
+            instructionText.textContent = instructions[currentInstruction];
+        } else {
+            currentInstruction = 0;
+            instructionText.textContent = instructions[currentInstruction];
+        }
+    });
+
     chatSend.addEventListener('click', handleSendMessage);
+    
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleSendMessage();
         }
     });
 
+    // Initialize chat with welcome message
     addMessage("Hello trainer! I'm Professor Oak's AI assistant. Ask me about programming concepts!", false);
   </script>
 </body>

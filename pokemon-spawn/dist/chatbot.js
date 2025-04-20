@@ -11,9 +11,9 @@ async function getChatbotResponse(message) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "inputs": message,
+                "inputs": `${SYSTEM_PROMPT}\n\nUser: ${message}\nAssistant:`,
                 "parameters": {
-                    "max_length": 100,
+                    "max_length": 150,
                     "temperature": 0.7,
                     "return_full_text": false
                 }
@@ -21,16 +21,23 @@ async function getChatbotResponse(message) {
         });
 
         const data = await response.json();
-        console.log('API Response:', data); // Debug line
+        console.log('API Response:', data); // For debugging
 
-        if (Array.isArray(data) && data[0]?.generated_text) {
-            return data[0].generated_text;
-        } else {
-            console.log('Falling back to default responses');
+        // Check for errors in the response
+        if (data.error) {
+            console.error('API Error:', data.error);
             return getFallbackResponse(message);
         }
+
+        // Check for valid response
+        if (Array.isArray(data) && data[0]?.generated_text) {
+            const aiResponse = data[0].generated_text.trim();
+            return aiResponse.length > 0 ? aiResponse : getFallbackResponse(message);
+        }
+
+        return getFallbackResponse(message);
     } catch (error) {
-        console.error('API Error:', error);
+        console.error('Network Error:', error);
         return getFallbackResponse(message);
     }
 }
