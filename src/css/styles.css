@@ -133,6 +133,33 @@ nav a {
   width: 784px;
 }
 
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 2em;
+}
+
+/* From Uiverse.io by Codewithvinay */ 
+.card {
+  width: 190px;
+  height: 254px;
+  border-radius: 50px;
+  background: #e0e0e0;
+  box-shadow: 10px 10px 30px #bebebe,
+                -10px -10px 3cqh #ffffff;
+  position: relative;
+  margin: 20px;
+  overflow: hidden;
+  transition: all 0.8s ease;
+ }
+
+ .card:hover {
+  box-shadow: 10px 10px 30px #c74141,
+              -10px -10px 30px #ffffff;
+ }
+
 .box .message {
   position: relative;
   float: left;
@@ -251,3 +278,4 @@ footer {
   margin-top: 2em;
   font-size: 0.95em;
 }
+
