@@ -6,8 +6,8 @@
 
 const config = {
   type: Phaser.AUTO,
-  width: 400,
-  height: 300,
+  width: 800,
+  height: 600,
   parent: "game-container",
   pixelArt: true,
   physics: {
@@ -37,7 +37,7 @@ let helpTextHidden = false;
 
 function preload() {
   this.load.image("tiles", "https://mikewesthad.github.io/phaser-3-tilemap-blog-posts/post-1/assets/tilesets/tuxmon-sample-32px-extruded.png");
-  this.load.tilemapTiledJSON("map", "https://raw.githubusercontent.com/jesus-aguilar-pro/EduSCAItion/refs/heads/main/assets/map/tilemaps/tuxemon-town.json?token=GHSAT0AAAAAAC5WCSXRDHUAUBAYX7RLQJA62AEST7A");
+  this.load.tilemapTiledJSON("map", "https://raw.githubusercontent.com/jesus-aguilar-pro/EduSCAItion/refs/heads/main/assets/map/tilemaps/tuxemon-town.json?token=GHSAT0AAAAAAC5WCSXQJHX4AKQKOPTSLMS42AEXAJA");
 
   // An atlas is a way to pack multiple images together into one texture. I'm using it to load all
   // the player animations (walking left, walking right, etc.) in one image. For more info see:
@@ -116,10 +116,10 @@ function create() {
 
   // Help text that has a "fixed" position on the screen
   const helpText = this.add.
-  text(16, 16, 'Arrow keys to move\nPress "Enter" to hide', {
+  text(16, 16, 'Use the arrow keys to move, go ahead and enter the battle gym \nto learn about variables! (Press "Enter" to hide)', {
     font: "18px monospace",
     fill: "#000000",
-    padding: { x: 20, y: 10 },
+    padding: { x: 20, y: 10},
     backgroundColor: "#ffffff" }).
 
   setScrollFactor(0).
@@ -237,7 +237,11 @@ function create() {
         alpha: 0,
         duration: 1000,
         delay: 2000,
-        onComplete: () => battleMessage.destroy()
+        onComplete: () => {
+          battleMessage.destroy();
+          // Transition to Pokemon battle page
+          window.location.href = '../../pokecode_progr_game/pokemon.html';
+        }
       });
     }
   });
